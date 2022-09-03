@@ -93,9 +93,7 @@ const loadNewsDetail = newsId => {
 
 //display news detail
 const displayNewsDetail = (news) => {
-    console.log(news.author.published_date);
     const modalTitle = document.getElementById('exampleModalLabel');
-    // console.log(modalTitle);
     modalTitle.innerText = `News Title: ${news.title}`;
     const newsDetail = document.getElementById('news-detail');
     newsDetail.innerText = `Detail-News: ${news.details}`;
@@ -106,17 +104,12 @@ const displayNewsDetail = (news) => {
     `;
 }
 
-//all news load proccess 
-const proccessLoadAllNews = event => {
+// categories event handler
+document.getElementById('category-list').addEventListener('click', function (event) {
     console.log(event.target.id);
     const categoryId = event.target.id;
     toggleSpinner(true);
     loadAllNews(categoryId);
-}
-
-// categories event handler
-document.getElementById('category-list').addEventListener('click', function (event) {
-    proccessLoadAllNews(event);
 })
 
 
@@ -132,3 +125,4 @@ const toggleSpinner = isLoading => {
 }
 
 loadCategories();
+loadAllNews('01');
