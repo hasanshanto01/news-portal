@@ -7,8 +7,21 @@ const loadCategories = () => {
         .catch(error => console.log(error));
 };
 
+// display categories 
+const displayCategories = categories => {
+    const categoryList = document.getElementById('category-list');
+    categories.forEach(category => {
+        const li = document.createElement('li');
+        li.setAttribute('id', `${category.category_id}`);
+        li.classList.add('list-group-item', 'border-0');
+        li.innerText = `${category.category_name}`;
+        categoryList.appendChild(li);
+    });
+};
+
 //load all news
 const loadAllNews = categoryId => {
+    console.log(categoryId);
     const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`;
     fetch(url)
         .then(res => res.json())
@@ -16,42 +29,14 @@ const loadAllNews = categoryId => {
         .catch(error => console.log(error));
 }
 
-//load news detail
-const loadNewsDetail = newsId => {
-    // console.log(newsId);
-    const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => displayNewsDetail(data.data[0]))
-        .catch(error => console.log(error));
-}
-
-//display news detail
-const displayNewsDetail = (news) => {
-    console.log(news.author.published_date);
-    const modalTitle = document.getElementById('exampleModalLabel');
-    // console.log(modalTitle);
-    modalTitle.innerText = `News Title: ${news.title}`;
-    const newsDetail = document.getElementById('news-detail');
-    newsDetail.innerText = `${news.details}`;
-    const info = document.getElementById('info');
-    info.innerHTML = `
-    <p class="mb-0 fw-semibold">Author: ${news.author.name ? news.author.name : 'Not Found'}</p>
-    <p class="mb-0 fw-semibold">Published On: ${news.author.published_date ? news.author.published_date : 'Not Found'} </p>
-    `;
-}
-
 //display all news
 const displayAllNews = newsInfos => {
-    // console.log(newsInfos);
     let newsCard = document.getElementById('news-card');
     newsCard.innerHTML = '';
     if (newsInfos.length !== 0) {
         newsInfos.forEach(newsInfo => {
-            // console.log(newsInfo._id);
             const cardDiv = document.createElement('div');
             cardDiv.classList.add('card', 'mb-3', 'p-2');
-            // cardDiv.classList.add('row', 'g-3');
             cardDiv.innerHTML = `
             <div class="row g-3">
                 <div class="col-md-3">
@@ -88,37 +73,62 @@ const displayAllNews = newsInfos => {
         });
     }
     else {
-        // console.log('No news Found');
         const p = document.createElement('p');
         p.classList.add('fs-2', 'text-danger', 'text-center');
         p.innerText = `No news Found!`;
         newsCard.appendChild(p);
     }
+    toggleSpinner(false);
 };
 
-// loadAllNews();
+//load news detail
+const loadNewsDetail = newsId => {
+    // console.log(newsId);
+    const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayNewsDetail(data.data[0]))
+        .catch(error => console.log(error));
+}
 
-// display categories 
-const displayCategories = categories => {
-    // console.log(categories);
-    const categoryList = document.getElementById('category-list');
-    // console.log(categoryList);
+//display news detail
+const displayNewsDetail = (news) => {
+    console.log(news.author.published_date);
+    const modalTitle = document.getElementById('exampleModalLabel');
+    // console.log(modalTitle);
+    modalTitle.innerText = `News Title: ${news.title}`;
+    const newsDetail = document.getElementById('news-detail');
+    newsDetail.innerText = `Detail-News: ${news.details}`;
+    const info = document.getElementById('info');
+    info.innerHTML = `
+    <p class="mb-0 fw-semibold">Author: ${news.author.name ? news.author.name : 'Not Found'}</p>
+    <p class="mb-0 fw-semibold">Published On: ${news.author.published_date ? news.author.published_date : 'Not Found'} </p>
+    `;
+}
 
-    // console.log(categoryField);
-    categories.forEach(category => {
-        // console.log(category.category_id, category.category_name);
-        const li = document.createElement('li');
-        li.setAttribute('id', `${category.category_id}`);
-        li.classList.add('list-group-item');
-        li.innerHTML = `
-        ${category.category_name}
-        `;
-        categoryList.appendChild(li);
-        document.getElementById(category.category_id).addEventListener('click', function () {
-            loadAllNews(category.category_id);
-        })
-        // li.classList.add('text-dark');
-    });
-};
+//all news load proccess 
+const proccessLoadAllNews = event => {
+    console.log(event.target.id);
+    const categoryId = event.target.id;
+    toggleSpinner(true);
+    loadAllNews(categoryId);
+}
+
+// categories event handler
+document.getElementById('category-list').addEventListener('click', function (event) {
+    proccessLoadAllNews(event);
+})
+
+
+//spinner
+const toggleSpinner = isLoading => {
+    const spinner = document.getElementById('spinner');
+    if (isLoading) {
+        spinner.classList.remove('d-none');
+    }
+    else {
+        spinner.classList.add('d-none');
+    }
+}
 
 loadCategories();
