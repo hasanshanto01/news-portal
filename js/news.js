@@ -8,22 +8,47 @@ const loadCategories = () => {
 };
 
 //load all news
-const loadAllNews = category_id => {
-    const url = `https://openapi.programming-hero.com/api/news/category/${category_id}`;
+const loadAllNews = categoryId => {
+    const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`;
     fetch(url)
         .then(res => res.json())
         .then(data => displayAllNews(data.data))
         .catch(error => console.log(error));
 }
 
+//load news detail
+const loadNewsDetail = newsId => {
+    // console.log(newsId);
+    const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(data => displayNewsDetail(data.data[0]))
+        .catch(error => console.log(error));
+}
+
+//display news detail
+const displayNewsDetail = (news) => {
+    console.log(news.author.published_date);
+    const modalTitle = document.getElementById('exampleModalLabel');
+    // console.log(modalTitle);
+    modalTitle.innerText = `News Title: ${news.title}`;
+    const newsDetail = document.getElementById('news-detail');
+    newsDetail.innerText = `${news.details}`;
+    const info = document.getElementById('info');
+    info.innerHTML = `
+    <p class="mb-0 fw-semibold">Author: ${news.author.name ? news.author.name : 'Not Found'}</p>
+    <p class="mb-0 fw-semibold">Published On: ${news.author.published_date ? news.author.published_date : 'Not Found'} </p>
+    `;
+}
+
 //display all news
 const displayAllNews = newsInfos => {
-    console.log(newsInfos);
+    // console.log(newsInfos);
     let newsCard = document.getElementById('news-card');
     newsCard.innerHTML = '';
     if (newsInfos.length !== 0) {
         newsInfos.forEach(newsInfo => {
-            // console.log(newsInfo);
+            // console.log(newsInfo._id);
             const cardDiv = document.createElement('div');
             cardDiv.classList.add('card', 'mb-3', 'p-2');
             // cardDiv.classList.add('row', 'g-3');
@@ -50,7 +75,9 @@ const displayAllNews = newsInfos => {
                                 <p class="mb-0"><i class="fa-regular fa-eye"></i><span class="ms-2 fw-semibold">${newsInfo.total_view ? newsInfo.total_view : 'Not Found'}</span></p>
                             </div>
                             <div class="col-4 d-flex justify-content-center align-items-center">
-                            <p class="fs-3 text-primary"><i class="fa fa-arrow-right"></i></p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class="fa fa-arrow-right" onclick=loadNewsDetail('${newsInfo._id}')></i>
+                                </button>
                             </div>
                         </div>
                     </div>
