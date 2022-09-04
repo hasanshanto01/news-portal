@@ -33,56 +33,63 @@ const loadAllNews = (categoryId, categoryName) => {
 const displayAllNews = (newsInfos, categoryName) => {
     let newsCard = document.getElementById('news-card');
     newsCard.innerHTML = '';
-    if (newsInfos.length !== 0) {
-        newsInfos.forEach(newsInfo => {
-            const cardDiv = document.createElement('div');
-            cardDiv.classList.add('card', 'mb-3', 'p-2');
-            cardDiv.innerHTML = `
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <img src="${newsInfo.thumbnail_url}" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-9">
-                    <div class="card-body">
-                        <h3 class="card-title">${newsInfo.title}</h3>
-                        <p class="card-text">${newsInfo.details.slice(0, 250)}...</p>
-                        <div class="row mt-4">
-                            <div class="col-4 d-flex align-items-center">
-                                <div class="w-25">
-                                <img src="${newsInfo.author.img ? newsInfo.author.img : 'Not Found'}" class="w-100 rounded-circle" alt="...">
-                                </div>
-                                <div class="w-75 ms-2">
-                                    <p class="fw-semibold mb-0">${newsInfo.author.name ? newsInfo.author.name : 'Not Found'}</p>
-                                    <p class="mb-0">${newsInfo.author.published_date ? newsInfo.author.published_date : 'Not Found'}</p>
-                                </div>
+    newsInfos.forEach(newsInfo => {
+        const cardDiv = document.createElement('div');
+        cardDiv.classList.add('card', 'mb-3', 'p-2');
+        cardDiv.innerHTML = `
+        <div class="row g-3">
+            <div class="col-md-3">
+                <img src="${newsInfo.thumbnail_url}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h3 class="card-title">${newsInfo.title}</h3>
+                    <p class="card-text">${newsInfo.details.slice(0, 250)}...</p>
+                    <div class="row mt-4">
+                        <div class="col-4 d-flex align-items-center">
+                            <div class="w-25">
+                            <img src="${newsInfo.author.img ? newsInfo.author.img : 'Not Found'}" class="w-100 rounded-circle" alt="...">
                             </div>
-                            <div class="col-4 d-flex justify-content-center align-items-center">
-                                <p class="mb-0"><i class="fa-regular fa-eye"></i><span class="ms-2 fw-semibold">${newsInfo.total_view ? newsInfo.total_view : 'Not Found'}</span></p>
+                            <div class="w-75 ms-2">
+                                <p class="fw-semibold mb-0">${newsInfo.author.name ? newsInfo.author.name : 'Not Found'}</p>
+                                <p class="mb-0">${newsInfo.author.published_date ? newsInfo.author.published_date : 'Not Found'}</p>
                             </div>
-                            <div class="col-4 d-flex justify-content-center align-items-center">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <i class="fa fa-arrow-right" onclick=loadNewsDetail('${newsInfo._id}')></i>
-                                </button>
-                            </div>
+                        </div>
+                        <div class="col-4 d-flex justify-content-center align-items-center">
+                            <p class="mb-0"><i class="fa-regular fa-eye"></i><span class="ms-2 fw-semibold">${newsInfo.total_view ? newsInfo.total_view : 'Not Found'}</span></p>
+                        </div>
+                        <div class="col-4 d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa fa-arrow-right" onclick=loadNewsDetail('${newsInfo._id}')></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            `;
-            newsCard.appendChild(cardDiv);
-        });
-    }
-    else {
-        const p = document.createElement('p');
-        p.classList.add('fs-2', 'text-danger', 'text-center');
-        p.innerText = `No news Found!`;
-        newsCard.appendChild(p);
-    }
+        </div>
+        `;
+        newsCard.appendChild(cardDiv);
+    });
+    // if (newsInfos.length !== 0) {
+
+    // }
+    // else {
+    //     const p = document.createElement('p');
+    //     p.classList.add('fs-2', 'text-danger', 'text-center');
+    //     p.innerText = `No news Found!`;
+    //     newsCard.appendChild(p);
+    // }
     // console.log(newsInfos.length);
     // console.log(categoryName);
     const sortField = document.getElementById('sort-field');
     // console.log(sortField.innerText);
-    sortField.innerText = `${newsInfos.length} items found for category ${categoryName}`;
+    if (newsInfos.length !== 0) {
+        sortField.innerText = `${newsInfos.length} news found for category ${categoryName}`;
+    }
+    else {
+        sortField.innerText = `No news found for category ${categoryName}`;
+    }
+
     toggleSpinner(false);
 };
 
