@@ -20,17 +20,17 @@ const displayCategories = categories => {
 };
 
 //load all news
-const loadAllNews = categoryId => {
-    console.log(categoryId);
+const loadAllNews = (categoryId, categoryName) => {
+    // console.log(categoryId);
     const url = `https://openapi.programming-hero.com/api/news/category/${categoryId}`;
     fetch(url)
         .then(res => res.json())
-        .then(data => displayAllNews(data.data))
+        .then(data => displayAllNews(data.data, categoryName))
         .catch(error => console.log(error));
 }
 
 //display all news
-const displayAllNews = newsInfos => {
+const displayAllNews = (newsInfos, categoryName) => {
     let newsCard = document.getElementById('news-card');
     newsCard.innerHTML = '';
     if (newsInfos.length !== 0) {
@@ -78,6 +78,11 @@ const displayAllNews = newsInfos => {
         p.innerText = `No news Found!`;
         newsCard.appendChild(p);
     }
+    // console.log(newsInfos.length);
+    // console.log(categoryName);
+    const sortField = document.getElementById('sort-field');
+    // console.log(sortField.innerText);
+    sortField.innerText = `${newsInfos.length} items found for category ${categoryName}`;
     toggleSpinner(false);
 };
 
@@ -106,10 +111,11 @@ const displayNewsDetail = (news) => {
 
 // categories event handler
 document.getElementById('category-list').addEventListener('click', function (event) {
-    console.log(event.target.id);
+    // console.log(event.target.innerText);
     const categoryId = event.target.id;
+    const categoryName = event.target.innerText;
     toggleSpinner(true);
-    loadAllNews(categoryId);
+    loadAllNews(categoryId, categoryName);
 })
 
 
@@ -125,4 +131,4 @@ const toggleSpinner = isLoading => {
 }
 
 loadCategories();
-loadAllNews('01');
+loadAllNews('01', 'Breaking News');

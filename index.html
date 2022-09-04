@@ -10,11 +10,9 @@
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <!-- font-awesome link  -->
     <script src="https://kit.fontawesome.com/39872b7f1b.js" crossorigin="anonymous"></script>
-    <!-- css file linkup  -->
-    <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- header section starts -->
     <header class="">
         <!-- navigation bar  -->
@@ -29,10 +27,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">News</a>
+                            <a class="nav-link active" aria-current="page" href="index.html">News</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Blog</a>
+                            <a class="nav-link" href="blog.html">Blog</a>
                         </li>
                     </ul>
                 </div>
@@ -48,6 +46,27 @@
     <!-- header section ends -->
 
     <!-- main section starts -->
+
+    <!-- sorting section  -->
+    <section class="container my-3">
+        <div class="border border-dark rounded my-3 d-flex align-items-center" style="height: 50px;">
+            <p id="sort-field" class="ms-3 mb-0">hello</p>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p class="fs-5 fw-semibold">Sort By View:
+                    <button type="button" class="btn btn-outline-secondary" disabled>Default <i
+                            class="fa fa-angle-down ms-2"></i></button>
+                </p>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary">Today's Pick</button>
+                <button type="button" class="btn btn-outline-primary">Trending</button>
+            </div>
+        </div>
+    </section>
+
+
     <main class="container my-4">
         <!-- all news section -->
         <section id="news-card">
@@ -93,7 +112,7 @@
     <!-- main section ends -->
 
     <!-- footer section starts -->
-    <footer>
+    <footer class="mt-auto">
         <section class="border p-3 text-center bg-light">
             <p class="fw-semibold">Copyright 2022 Morning News</p>
         </section>
