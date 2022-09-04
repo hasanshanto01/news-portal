@@ -4,7 +4,7 @@ const loadCategories = () => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayCategories(data.data.news_category))
-        .catch(error => console.log(error));
+        .catch(error => alert(error.message));
 };
 
 // display categories 
@@ -26,7 +26,7 @@ const loadAllNews = (categoryId, categoryName) => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayAllNews(data.data, categoryName))
-        .catch(error => console.log(error));
+        .catch(error => alert(error.message));
 }
 
 //display all news
@@ -87,7 +87,7 @@ const loadNewsDetail = newsId => {
     fetch(url)
         .then(res => res.json())
         .then(data => displayNewsDetail(data.data[0]))
-        .catch(error => console.log(error));
+        .catch(error => alert(error.message));
 }
 
 //display news detail
