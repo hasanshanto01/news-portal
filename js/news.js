@@ -70,19 +70,7 @@ const displayAllNews = (newsInfos, categoryName) => {
         `;
         newsCard.appendChild(cardDiv);
     });
-    // if (newsInfos.length !== 0) {
-
-    // }
-    // else {
-    //     const p = document.createElement('p');
-    //     p.classList.add('fs-2', 'text-danger', 'text-center');
-    //     p.innerText = `No news Found!`;
-    //     newsCard.appendChild(p);
-    // }
-    // console.log(newsInfos.length);
-    // console.log(categoryName);
     const sortField = document.getElementById('sort-field');
-    // console.log(sortField.innerText);
     if (newsInfos.length !== 0) {
         sortField.innerText = `${newsInfos.length} news found for category ${categoryName}`;
     }
@@ -95,7 +83,6 @@ const displayAllNews = (newsInfos, categoryName) => {
 
 //load news detail
 const loadNewsDetail = newsId => {
-    // console.log(newsId);
     const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
     fetch(url)
         .then(res => res.json())
@@ -118,7 +105,6 @@ const displayNewsDetail = (news) => {
 
 // categories event handler
 document.getElementById('category-list').addEventListener('click', function (event) {
-    // console.log(event.target.innerText);
     const categoryId = event.target.id;
     const categoryName = event.target.innerText;
     toggleSpinner(true);
